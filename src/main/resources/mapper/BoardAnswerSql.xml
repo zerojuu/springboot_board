@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.BoardAnswerMapper">
+    <insert id="insertAnswer" parameterType="badto">
+        insert into boardanswer (num,name,myid,content,writeday) values(#{num},#{name},#{myid},#{content},now())
+    </insert>
+    
+    <select id="getAllAnswers" parameterType="String" resultType="badto">
+        select * from boardanswer where num=#{num} order by idx desc
+    </select>
+    
+    <select id="getAnswer" parameterType="String" resultType="badto">
+    select * from boardanswer where idx=#{idx}
+    </select>
+    
+    <update id="updateAnswer" parameterType="badto">
+        update boardanswer set content=#{content} where idx=#{idx}
+    </update>
+    
+    <delete id="deleteAnswer" parameterType="String">
+        delete from boardanswer where idx=#{idx}
+    </delete>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.MemberMapper">
+    <insert id="insertMember" parameterType="mdto">
+        insert into mymember (name,id,pass,hp,addr,email,gaipday) values (#{name},#{id},#{pass},#{hp},#{addr},#{email},now())
+    </insert>
+    
+    <select id="getAllMembers" resultType="mdto">
+        select * from mymember order by id asc
+    </select>
+    
+    <select id="getIdCheck" parameterType="String" resultType="int">
+        select count(*) from mymember where id=#{id}
+    </select>
+    
+    <select id="getCheckPass" parameterType="HashMap" resultType="int">
+        select count(*) from mymember where num=#{num} and pass=#{pass}
+    </select>
+    
+    <select id="getMember" parameterType="String" resultType="mdto">
+        select * from mymember where num=#{num}
+    </select>
+    
+    <update id="updateMember" parameterType="mdto">
+        update mymember set name=#{name},hp=#{hp},addr=#{addr},email=#{email} where num=#{num}
+    </update>
+    
+    <delete id="deleteMember" parameterType="String">
+        delete from mymember where num=#{num}
+    </delete>
+    
+<!-- 로그인 -->
+    <!-- 아이디 넘기고 이름 받으니까 둘 다 string  -->
+    <select id="getName" parameterType="String" resultType="String">
+        select name from mymember where id=#{id}
+    </select>
+    
+    <!-- 맞으면1, 틀리면 0이기에 resulttype은 int -->
+    <select id="login" parameterType="HashMap" resultType="int">
+        select count(*) from mymember where id=#{id} and pass=#{pass}
+    </select>
+</mapper>

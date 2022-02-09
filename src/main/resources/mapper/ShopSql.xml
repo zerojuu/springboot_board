@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.MysqlShopMapper">
+    <select id="getTotalCount" resultType="int">
+        select count(*) from shop
+    </select>
+    
+    <insert id="insertShop" parameterType="sdto">
+        insert into shop(sangpum,price,photoname,ipgoday) values (#{sangpum},#{price},#{photoname},now())
+    </insert>
+    
+    <!-- 우리가 구하려는 결과값이 shop의 묶음이기에 resulttype은 sdto -->
+    <select id="getAllSangpums" resultType="sdto">
+        select * from shop order by num desc
+    </select>
+    
+    <update id="updateShop" parameterType="sdto">
+        update shop set sangpum=#{sangpum},price=#{price}
+            <if test="photoname!='null'">
+                ,photoname=#{photoname}
+            </if>
+        where num=#{num}
+    </update>
+    
+    <select id="getSangpum" parameterType="String" resultType="sdto">
+        select * from shop where num=#{num}
+    </select>
+    
+    <delete id="deleteSangpum" parameterType="String">
+        delete from shop where num=#{num}
+    </delete>
+</mapper>

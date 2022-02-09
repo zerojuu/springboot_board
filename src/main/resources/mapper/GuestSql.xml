@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.GuestMapper">
+   
+   <select id="getTotalCount" resultType="int">
+       select count(*) from myguest
+   </select>
+   
+    <insert id="insertGuest" parameterType="gdto">
+        insert into myguest (nickname,photo,content,likes,writeday) values(#{nickname},#{photo},#{content},0,now())
+    </insert>
+    
+    <update id="updateGuest" parameterType="gdto">
+        update myguest set nickname=#{nickname}, content=#{content} 
+            <if test="photo!='null'">
+                ,photo=#{photo} 
+            </if>
+        where num=#{num}
+    </update>
+    
+    <delete id="deleteGuest" parameterType="String">
+        delete from myguest where num=#{num}
+    </delete>
+    
+    <update id="updateLikes" parameterType="String">
+        update myguest set likes=likes+1 where num=#{num}
+    </update>
+    
+    <select id="getList" parameterType="HashMap" resultType="gdto">
+        select * from myguest order by num desc limit #{start},#{perPage}
+    </select>
+    
+    <select id="getData" parameterType="String" resultType="gdto">
+        select * from myguest where num=#{num}
+    </select>
+</mapper>
